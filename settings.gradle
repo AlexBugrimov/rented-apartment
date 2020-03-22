@@ -1,0 +1,6 @@
+include 'rest-api'
+
+rootProject.name = name
+
+rootProject.children.each { descriptor -> descriptor.buildFileName = "${descriptor.name}.gradle" }
+
