@@ -1,0 +1,94 @@
+openapi: 3.0.1
+info:
+  title: API Съем квартиры 1.0
+  description: REST API для системы Съемная квартира
+  version: v1
+servers:
+  - url: /api/v1
+
+tags:
+  - name: Tariffs
+    description: Тарифы
+
+paths:
+  /tariffs:
+    get:
+      tags:
+        - Tariffs
+      summary: Получение данных о тарифах
+      description: Все данные по тарифам по холодной и горячей воде, а так же электро энергии
+      operationId: GetTariffs
+      responses:
+        200:
+          description: OK
+          content:
+            application/json:
+              schema:
+                title: TariffsPage
+                allOf:
+                  - $ref: '#/components/schemas/AbstractPage'
+                  - type: object
+                    properties:
+                      content:
+                        type: array
+                        items:
+                          $ref: '#/components/schemas/Tariff'
+        500:
+          $ref: '#/components/responses/InternalServerError'
+
+  /ping:
+    get:
+      tags:
+        - Сервисные функции
+      summary: 'Служебный метод, всегда возвращает ```pong```'
+      operationId: Ping
+      responses:
+        200:
+          description: Success
+          content:
+            text/plain:
+              schema:
+                type: string
+                example: pong
+        404:
+          $ref: '#/components/responses/UpgradeRequired'
+        500:
+          $ref: '#/components/responses/InternalServerError'
+
+components:
+  parameters:
+    pageParam:
+      name: page
+      in: query
+      description: Result page you want to retrieve (0..N)
+      schema:
+        type: integer
+        format: int32
+        minimum: 0
+        default: 0
+    sizePage:
+      name: size
+      in: query
+      description: Number of records per page
+      schema:
+        type: integer
+        format: int32
+        minimum: 1
+        default: 50
+        maximum: 100
+
+  responses:
+    InternalServerError:
+      description: Внутренняя ошибка сервера. Следует показать пользователю сообщение о временной недоступности сервера и предложить повторить действие
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/RaApiError'
+    MethodArgumentNotValid:
+      description: Сервер не может обработать один из переменных параметров. Возможно он передан в неверном формате. Следует показать пользователю предложение ввести другое значение параметра или обновить версию приложения
+
+
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/RaApiError'
