@@ -86,8 +86,6 @@ components:
             $ref: '#/components/schemas/RaApiError'
     MethodArgumentNotValid:
       description: Сервер не может обработать один из переменных параметров. Возможно он передан в неверном формате. Следует показать пользователю предложение ввести другое значение параметра или обновить версию приложения
-
-
       content:
         application/json:
           schema:
