@@ -1,5 +1,50 @@
+buildscript {
+    repositories {
+        mavenCentral()
+    }
+    dependencies {
+        classpath("gradle.plugin.org.hidetake:gradle-swagger-generator-plugin:2.18.1")
+        classpath("io.franzbecker.gradle:gradle-lombok:3.2.0")
+        classpath("io.spring.gradle:dependency-management-plugin:1.0.8.RELEASE")
+        classpath("org.springframework.boot:spring-boot-gradle-plugin:2.2.6.RELEASE")
+    }
+}
+
+plugins {
+    id 'java'
+    id 'idea'
+    id 'eclipse'
+}
+
+apply plugin: 'io.franzbecker.gradle.lombok.LombokPlugin'
+lombok { version("1.18.10") }
+
+apply plugin: "eclipse"
+apply plugin: "io.spring.dependency-management"
+apply plugin: "org.hidetake.swagger.generator"
+apply plugin: "org.springframework.boot"
+
+ext {
+    swaggerCodegenVersionV3 = '3.0.19'
+    swaggerCoreVersionV3 = '2.1.2'
+}
+
+tasks.withType(JavaCompile) {
+    sourceCompatibility(JavaVersion.VERSION_1_8)
+    System.setProperty("file.encoding", "UTF-8")
+    options.encoding("UTF-8")
+}
+
+configurations {
+    swaggerCodegenV3
+}
 
 dependencies {
+    swaggerCodegenV3 group: 'io.swagger.codegen.v3', name: 'swagger-codegen-cli', version: swaggerCodegenVersionV3
+    compile group: 'io.swagger.core.v3', name: 'swagger-annotations', version: swaggerCoreVersionV3
+    compile group: 'org.webjars', name: 'swagger-ui', version: '3.23.8'
+    testCompile group: 'io.swagger.parser.v3', name: 'swagger-parser', version: '2.0.17'
+
     implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
     implementation 'org.springframework.boot:spring-boot-starter-web'
     compileOnly 'org.projectlombok:lombok'
@@ -12,3 +57,26 @@ dependencies {
     }
 }
 
+swaggerSources {
+    openapi {
+        inputFile = file('src/main/resources/static/openapi.yaml')
+        code {
+            language = 'spring'
+            components = [models: true, apis: true, apiTests: false]
+            additionalProperties = [
+                    'modelPackage': 'dev.bug.api.ra.openapi.dto',
+                    'apiPackage': 'dev.bug.api.ra.openapi',
+                    'invokerPackage': 'dev.bug.api.ra.openapi',
+                    'dateLibrary': 'java8',
+                    'hideGenerationTimestamp': 'true',
+                    'interfaceOnly': 'true',
+                    'useBeanValidation': 'true'
+            ]
+            configuration = configurations.swaggerCodegenV3
+        }
+    }
+}
+
+compileJava.dependsOn swaggerSources.openapi.code
+sourceSets.main.java.srcDir "${swaggerSources.openapi.code.outputDir}/src/main/java"
+sourceSets.main.resources.srcDir "${swaggerSources.openapi.code.outputDir}/src/main/resources"

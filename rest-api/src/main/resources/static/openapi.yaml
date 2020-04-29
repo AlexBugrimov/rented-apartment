@@ -33,6 +33,14 @@ paths:
                         type: array
                         items:
                           $ref: '#/components/schemas/Tariff'
+        400:
+          $ref: '#/components/responses/MethodArgumentNotValid'
+        401:
+          $ref: '#/components/responses/Unauthorized'
+        404:
+          $ref: '#/components/responses/NotFound'
+        406:
+          $ref: '#/components/responses/NotAcceptable'
         500:
           $ref: '#/components/responses/InternalServerError'
 
@@ -90,3 +98,139 @@ components:
         application/json:
           schema:
             $ref: '#/components/schemas/RaApiError'
+    NotAcceptable:
+      description: Сервер не может вернуть ответ, соответствущий списку допустимых значений, определенный в заголовках упрреждающего согласования контента (`Accept`, `Accept-Charset`, `Accept-Encoding`)
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/RaApiError'
+    NotFound:
+      description: Запрашиваемый элемент не найден. Необходимо обновление содержимого экрана, который содержит ссылку на указанный в запросе элемент
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/RaApiError'
+    UpgradeRequired:
+      description: Не найден вызываемый метод. Свидетельствует о необходимости обновления версии клиентского приложения.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/RaApiError'
+    Unauthorized:
+      description: Требуется аутентификация. Обычно означает истечение срока действия OAuth2 Access Token'а и необходимость его повторного запроса.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/RaApiError'
+
+  schemas:
+    RaApiError:
+      type: object
+      required:
+        - code
+        - errorMessage
+      properties:
+        code:
+          type: string
+          description: Код ошибки
+        errorMessage:
+          type: string
+          description: Сообщение для вывода пользователю
+        debug:
+          type: string
+          description: Сообщение для отладки разработчиком
+
+    AbstractCreatedUpdatedHolder:
+      type: object
+      properties:
+        created:
+          type: string
+          description: Дата и время создания объекта
+          format: date-time
+        updated:
+          type: string
+          description: Дата и время последнего изменения объекта
+          format: date-time
+
+    AbstractPage:
+      type: object
+      description: Абстрактная модель постраничного ответа сервера
+      properties:
+        empty:
+          type: boolean
+          description: Whether the current page is empty
+        first:
+          type: boolean
+          description: Whether the current page is the first one
+        hasContent:
+          type: boolean
+          description: Whether the page has content at all
+        hasNext:
+          type: boolean
+          description: Whether there is a next page
+        hasPrevious:
+          type: boolean
+          description: Whether there is a previous page
+        last:
+          type: boolean
+          description: Whether the current page is the last one
+        number:
+          type: integer
+          format: int32
+          description: The number of the current page. Is always non-negative
+        numberOfElements:
+          type: integer
+          format: int32
+          description: The number of elements currently on this page
+        size:
+          type: integer
+          format: int32
+          description: The size of the page (i.e. from request)
+        totalElements:
+          type: integer
+          format: int32
+          description: The total amount of elements
+        totalPages:
+          type: integer
+          format: int32
+          description: The number of total pages
+
+    Tariffs:
+      description: Тарифы ЖКХ
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int32
+          description: Идентификатор
+        counterType:
+          $ref: '#/components/schemas/CounterType'
+        value:
+          type: number
+          format: double
+          description: Значение тарифа
+        unit:
+          type: string
+          description: Единица измерения
+        isActNow:
+          type: boolean
+          description: Действует сейчас тариф
+
+    MeterReading:
+      type: object
+      description: Показание счетчика
+      properties:
+        counterType:
+          $ref: '#/components/schemas/CounterType'
+
+    CounterType:
+      type: string
+      enum:
+        - cold-water
+        - hot-water
+        - electricity
+      description: >
+        Тип счетчика:
+        * `cold-water` - Холодная вода
+        * `hot-water` - Горячая вода
+        * `electricity` - Электроэнергия

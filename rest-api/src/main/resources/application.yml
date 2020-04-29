@@ -1,1 +1,10 @@
+server:
+  address: localhost
+  error:
+    include-stacktrace: never
+  port: 8080
+  servlet:
+    context-path: /api/v1
 
+swagger-ui:
+  enabled: true
