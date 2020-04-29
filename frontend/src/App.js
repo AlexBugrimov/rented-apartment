@@ -3,13 +3,15 @@ import './App.css';
 import {BrowserRouter as Router, Link, Route, Switch,} from "react-router-dom";
 import routers from "./routers";
 
+
 function App() {
-  const { links } = routers();
   return (
     <Router>
-      {links.map(({item, route, label}) => (route && <Link key={item} to={route}>{label}</Link>))}
+
+        {routers().map(({item, route, label}) => (route && <Link key={item} to={route}>{label}</Link>))}
+
       <Switch>{routers().map(
-        ({ item, exact, route, page}) => (<Route key={item} exact={exact} path={route} component={page}/>)
+        ({item, exact, route, page}) => (<Route key={item} exact={exact} path={route} component={page}/>)
       )}
       </Switch>
     </Router>
