@@ -6,5 +6,9 @@ server:
   servlet:
     context-path: /api/v1
 
+spring:
+  jpa:
+    open-in-view: false
+
 swagger-ui:
   enabled: true
