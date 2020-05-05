@@ -7,8 +7,24 @@ server:
     context-path: /api/v1
 
 spring:
+  datasource:
+    url: jdbc:h2:file:./apartment;INIT=create schema if not exists apartment;DB_CLOSE_ON_EXIT=FALSE
+    username: sa
+    password: password
+    driverClassName: org.h2.Driver
+  h2:
+    console:
+      enabled: true
+      path: /h2-console
+
   jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
     open-in-view: false
+
+  hateoas:
+    use-hal-as-default-json-media-type: false
 
 swagger-ui:
   enabled: true

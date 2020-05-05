@@ -1,7 +1,3 @@
-plugins {
-    id "org.hidetake.swagger.generator" version "2.18.2" apply(false)
-}
-
 allprojects {
     buildscript {
         repositories {
@@ -14,7 +10,7 @@ allprojects {
     }
 
     tasks.withType(JavaCompile) {
-        sourceCompatibility(JavaVersion.VERSION_1_8)
+        sourceCompatibility(JavaVersion.VERSION_11)
         System.setProperty("file.encoding", "UTF-8")
         options.encoding("UTF-8")
     }
