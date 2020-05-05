@@ -16,7 +16,7 @@ ext {
     swaggerCoreVersionV3 = '3.0.19'
     swaggerVersion = "2.4.0"
     swaggerAnnotationVersion = "1.5.21"
-    jacksonVersion = "2.8.9"
+    jacksonVersion = "2.9.4"
     jerseyVersion = "2.25.1"
 }
 
