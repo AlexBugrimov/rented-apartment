@@ -1,6 +1,7 @@
 package dev.bug.backend.service;
 
-import dev.bug.api.ra.openapi.dto.Tariff;
+
+import dev.bug.backend.model.Tariff;
 
 import java.util.List;
 

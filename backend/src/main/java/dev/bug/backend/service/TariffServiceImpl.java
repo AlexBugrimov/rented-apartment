@@ -8,11 +8,12 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 @Service
-public class TariffServiceImpl {
+public class TariffServiceImpl implements TariffService {
 
     @Autowired
     private TariffRepository tariffRepository;
 
+    @Override
     public List<Tariff> getTariffs() {
         return tariffRepository.findAll();
     }
