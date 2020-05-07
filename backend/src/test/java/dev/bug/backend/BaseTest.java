@@ -17,4 +17,7 @@ public abstract class BaseTest {
 
     @Autowired
     protected ObjectMapper objectMapper;
+
+    @Autowired
+    protected TestDataHelper testDataHelper;
 }

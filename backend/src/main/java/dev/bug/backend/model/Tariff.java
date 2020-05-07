@@ -21,9 +21,6 @@ public class Tariff {
     @Enumerated(EnumType.STRING)
     private CounterType counterType;
 
-    @Column(length = 32)
-    private String unit;
-
     @Column(columnDefinition = "Decimal(8, 2) default '0.00'")
     private BigDecimal value;
 

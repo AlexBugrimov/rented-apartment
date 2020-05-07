@@ -10,7 +10,6 @@ import java.time.LocalDate;
 public class TariffDto {
 
     private CounterType counterType;
-    private String unit;
     private BigDecimal value;
     private boolean isActNow;
     private LocalDate createdAt;

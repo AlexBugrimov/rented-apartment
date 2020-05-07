@@ -14,10 +14,11 @@ sourceCompatibility = JavaVersion.VERSION_11
 ext {
     swaggerCodegenVersionV3 = '3.0.19'
     swaggerCoreVersionV3 = '3.0.19'
-    swaggerVersion = "2.4.0"
-    swaggerAnnotationVersion = "1.5.21"
-    jacksonVersion = "2.9.4"
-    jerseyVersion = "2.25.1"
+    swaggerVersion = '2.4.0'
+    swaggerAnnotationVersion = '1.5.21'
+    jacksonVersion = '2.9.4'
+    jerseyVersion = '2.25.1'
+    mapperVersion = '2.3.7'
 }
 
 configurations {
@@ -58,6 +59,10 @@ dependencies {
     compile "com.fasterxml.jackson.core:jackson-annotations:${jacksonVersion}"
     compile "com.fasterxml.jackson.core:jackson-databind:${jacksonVersion}"
     compile "com.fasterxml.jackson.datatype:jackson-datatype-jsr310:${jacksonVersion}"
+
+    // Mapper
+    compile "org.modelmapper:modelmapper:${mapperVersion}"
+
 }
 
 swaggerSources {

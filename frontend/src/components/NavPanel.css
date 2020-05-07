@@ -1,0 +1,57 @@
+.NavPanel {
+    position: fixed;
+    width: 200px;
+    height: 100%;
+    background: var(--panelColor);
+    padding: 30px 0;
+}
+
+.NavTitle {
+    color: var(--white);
+    text-transform: uppercase;
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+.NavItem {
+    padding: 15px;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+    border-top: 1px solid rgba(225, 225, 225, 0.05);
+}
+
+.NavItemLink {
+    color: var(--itemColor);
+    display: block;
+}
+
+.NavItemLink .svg-inline--fa {
+    width: 25px;
+}
+
+.NavItem:hover {
+    background: var(--itemColorHover);
+}
+
+.NavItemLink:hover {
+    color: var(--white);
+}
+
+.RepoLink {
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+}
+
+.RepoLink a {
+    display: block;
+    width: 40px;
+    height: 40px;
+    background: var(--itemColorHover);
+    line-height: 40px;
+    text-align: center;
+    margin: 10px;
+    color: var(--itemColor);
+    border-radius: 10px;
+}

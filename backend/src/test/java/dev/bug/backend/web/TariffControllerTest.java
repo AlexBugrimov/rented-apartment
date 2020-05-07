@@ -1,6 +1,7 @@
 package dev.bug.backend.web;
 
 import dev.bug.backend.BaseTest;
+import dev.bug.backend.TestDataHelper;
 import dev.bug.backend.repository.TariffRepository;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -17,9 +18,6 @@ class TariffControllerTest extends BaseTest {
 
     @MockBean
     private TariffRepository tariffRepository;
-
-    @Autowired
-    private TestDataHelper testDataHelper;
 
     @Test
     @DisplayName("Получить все транзакции со статусом 200")

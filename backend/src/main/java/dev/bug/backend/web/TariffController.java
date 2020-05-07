@@ -25,10 +25,8 @@ public class TariffController {
 
     @GetMapping
     public ResponseEntity<List<TariffDto>> getTariffs() {
-        final List<TariffDto> tariffs = tariffService.getTariffs()
-                .stream()
-                .map(mapper::toTariffDto)
-                .collect(Collectors.toList());
+        final List<TariffDto> tariffs = mapper
+                .toTariffDtoList(tariffService.getTariffs());
         return ResponseEntity.ok(tariffs);
     }
 }

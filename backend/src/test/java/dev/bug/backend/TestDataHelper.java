@@ -1,4 +1,4 @@
-package dev.bug.backend.web;
+package dev.bug.backend;
 
 import dev.bug.backend.model.CounterType;
 import dev.bug.backend.model.Tariff;
@@ -12,28 +12,29 @@ import java.util.List;
 @Component
 public class TestDataHelper {
 
-    List<Tariff> createTariffs() {
+    public Tariff createTariff() {
+        return new Tariff()
+                .setId(100L)
+                .setActNow(true)
+                .setCounterType(CounterType.HOT_WATER)
+                .setCreatedAt(LocalDate.now())
+                .setValue(new BigDecimal("20.6"));
+    }
+
+    public List<Tariff> createTariffs() {
         return Arrays.asList(
-                new Tariff()
-                        .setId(100L)
-                        .setActNow(true)
-                        .setCounterType(CounterType.HOT_WATER)
-                        .setCreatedAt(LocalDate.now())
-                        .setUnit("Литр")
-                        .setValue(new BigDecimal("20.6")),
+                createTariff(),
                 new Tariff()
                         .setId(200L)
                         .setActNow(true)
                         .setCounterType(CounterType.COLD_WATER)
                         .setCreatedAt(LocalDate.now())
-                        .setUnit("Литр")
                         .setValue(new BigDecimal("66.9")),
                 new Tariff()
                         .setId(300L)
                         .setActNow(true)
                         .setCounterType(CounterType.ELECTRICITY)
                         .setCreatedAt(LocalDate.now())
-                        .setUnit("Вт.")
                         .setValue(new BigDecimal("33.2"))
         );
     }
