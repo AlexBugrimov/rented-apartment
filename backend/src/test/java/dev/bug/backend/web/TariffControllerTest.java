@@ -1,17 +1,17 @@
 package dev.bug.backend.web;
 
 import dev.bug.backend.BaseTest;
-import dev.bug.backend.TestDataHelper;
 import dev.bug.backend.repository.TariffRepository;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 
+import static org.hamcrest.Matchers.hasSize;
 import static org.mockito.BDDMockito.given;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 class TariffControllerTest extends BaseTest {
@@ -27,6 +27,8 @@ class TariffControllerTest extends BaseTest {
         mockMvc.perform(get("/tariffs")
                 .accept(MediaType.APPLICATION_JSON))
                 .andDo(print())
-                .andExpect(status().is2xxSuccessful());
+                .andExpect(status().is2xxSuccessful())
+                .andExpect(jsonPath("$").isArray())
+                .andExpect(jsonPath("$", hasSize(3)));
     }
 }

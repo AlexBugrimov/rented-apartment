@@ -5,8 +5,6 @@ import "./NavPanel.css";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faCodeBranch} from "@fortawesome/free-solid-svg-icons";
 
-
-
 export default () => (
   <div className="NavPanel">
     <h2 className="NavTitle">Аренда</h2>
